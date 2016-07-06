@@ -1,0 +1,70 @@
+# http://rpubs.com/brencklg/194217
+Public Education 
+========================================================
+author: George Brenckle
+date: July 4, 2016
+autosize: true
+transition: rotate
+
+Outcomes vs. Costs
+
+Why I Picked This Subject
+========================================================
+* I attended our local "Town Meeting" this spring where we voted on the school budget
+* I have had several conversations with my sister and my neices (teachers) about public school funding
+* This prompted questions
+    + What do we spend on K-12 education nationally?
+    + What does it cost per student?
+    + How do we measure "success"?
+    + What other environmental factors have an effect?
+* I started reading on the subject and looking for data that could answer these questions
+* This report is my first step in the process
+
+Where I Got the Data
+========================================================
+* There is a lot of useful school district budget data at the <a href="https://www.census.gov/govs/school/">US Census Bureau </a>
+* Quality metrics are harder to find and variable across the US
+    + It was easy to find Massachusetts school performance data at the <a href='http://profiles.doe.mass.edu'>MA Department of Elementary and Secondary Education </a>  web site.
+    + Focusing on high school, we can look at
+        - Graduation Rates
+        - Mean SAT Scores
+        - Percent Attending 4-Year College
+        - Mass. Comprehensive Assessment System Scores for 10th Grade
+
+Basic Information (National)
+========================================================
+
+```{r echo=FALSE}
+library(plyr)
+library(ggplot2)
+library(dplyr)
+library(knitr)
+library(scales)
+
+extended <- readRDS('Data/extended.Rda')
+MAdata <- readRDS('Data/finalMAdata.Rda')
+```
+
+* Overall, we spend close to `r dollar_format() (sum(extended$TOTALREV*1000 ))`   serving `r comma_format() (sum(extended$ENROLL))` students according to Census Bureau data.  On average, spending across the country  amounts to `r dollar_format() (sum(extended$TOTALREV*1000)/sum(extended$ENROLL)) `per student annually. This is a lot of money, when looked at in total.
+* Spending in the Northeast is higher than in other parts of the country.
+* In Massachussetts spending per student averages `r dollar_format() (mean(MAdata$REVPER)*1000)`.
+* Question:  What kind of results are being seen for spending on average 18 thousand dollars per student per year in Massachusetts?  How do we measure results?
+
+Outcome Measures
+===========================
+* The following data were obtained from the Massachusetts Department of Education:
+    + Mean SAT Scores for the 2014/2015 school year (total score)
+    + Overall Graduation rate (% of students graduation ) for 2015
+    + Graduates pursuing higher education in the 2014-2015 school year
+    + Massachusetts Comprehensive Assessment System 2015 Test Scores for 10th Grade 
+        - Results reported for Language, Math and Science
+        - Students rated as Advanced, Proficient, Needs Improvement, and Warning/Failing
+        
+
+Initial Findings/Exploration 
+==============================
+* The data are available for examination on the <a href="https://brencklg.shinyapps.io/PubEdQualCost/"> Shiny Apps </a> web site.
+* Outcomes variables can be examined based on various economic factors
+* Initial indications are that family/household median income and poverty levels have a larger impact than school district spending.
+* There appears to be a required level of spending to assure that educational outcomes are reached, but there is a point where more school spending does not appear to help.
+
